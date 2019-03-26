@@ -21,9 +21,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/users")
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List getUsers(ModelMap modelMap) {
+    @GetMapping(value = "/users")
+    public List<User> getUsers() {
         // 查询user表中所有记录
         return userService.findAll();
     }
