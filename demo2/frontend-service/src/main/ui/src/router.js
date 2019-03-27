@@ -33,6 +33,7 @@ const router = new VueRouter({
 });
 
 const DEFAULT_TITLE = 'SpringMVC Demo';
+// eslint-disable-next-line
 router.afterEach((to, from) => {
   document.title = to.meta.title || DEFAULT_TITLE;
 });

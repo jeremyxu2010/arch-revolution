@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Created by jeremyxu on 2019/3/26.
  */
-public class User {
+public class UserDTO {
     private int id;
     private String nickname;
     private String password;
@@ -56,7 +56,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserDTO user = (UserDTO) o;
         return id == user.id &&
                 Objects.equals(nickname, user.nickname) &&
                 Objects.equals(password, user.password) &&

@@ -4,28 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import personal.jeremyxu.archrevolutition.demo2.aggregationservice.service.BlogProxyService;
-import personal.jeremyxu.archrevolutition.demo2.aggregationservice.service.UserFeignService;
+import personal.jeremyxu.archrevolutition.demo2.aggregationservice.dto.BlogDTO;
+import personal.jeremyxu.archrevolutition.demo2.aggregationservice.service.AggregationService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/aggregation")
 public class AggregationController {
 
     @Autowired
-    UserFeignService userFeignService;
+    AggregationService aggregationService;
 
-    @Autowired
-    BlogProxyService blogProxyService;
+    @GetMapping("/blogs")
+    public List<BlogDTO> getBlogs(){
+        return aggregationService.getBlogs();
+    }
 
+    @GetMapping("/blogs/{id}")
+    public ResponseEntity getBlog(@PathVariable("id") Integer blogId){
+        BlogDTO blog = aggregationService.getBlog(blogId);
+        return new ResponseEntity(blog, HttpStatus.OK);
+    }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Integer userId){
-        // 先删除该用户的博文
-        blogProxyService.deleteBlogsByUserId(userId);
-        // 再删除该用户
-        userFeignService.deleteUser(userId);
+        aggregationService.deleteUser(userId);
         return new ResponseEntity(userId, HttpStatus.OK);
     }
-
 
 }

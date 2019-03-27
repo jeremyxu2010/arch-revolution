@@ -5,7 +5,7 @@ Vue.use(VueResource)
 
 const getUserList = function(args, successCallback, errorCallback) {
     var memthodName = 'getUserList'
-    Vue.http.get('http://127.0.0.1:8084/api/users').then(response => {
+    Vue.http.get(window.API_GATEWAY_URL + '/api/users').then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -20,7 +20,7 @@ const getUserList = function(args, successCallback, errorCallback) {
 
 const getUserById = function (args, successCallback, errorCallback) {
     var memthodName = 'getUserById'
-    Vue.http.get('http://127.0.0.1:8084/api/users/' + args.userId).then(response => {
+    Vue.http.get(window.API_GATEWAY_URL + '/api/users/' + args.userId).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -35,7 +35,7 @@ const getUserById = function (args, successCallback, errorCallback) {
 
 const editUser = function (args, successCallback, errorCallback) {
     var memthodName = 'getUserById'
-    Vue.http.put('http://127.0.0.1:8084/api/users/' + args.userId, args.user).then(response => {
+    Vue.http.put(window.API_GATEWAY_URL + '/api/users/' + args.userId, args.user).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -50,7 +50,7 @@ const editUser = function (args, successCallback, errorCallback) {
 
 const addUser = function (args, successCallback, errorCallback) {
     var memthodName = 'getUserById'
-    Vue.http.post('http://127.0.0.1:8084/api/users', args.user).then(response => {
+    Vue.http.post(window.API_GATEWAY_URL + '/api/users', args.user).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -65,7 +65,7 @@ const addUser = function (args, successCallback, errorCallback) {
 
 const deleteUser = function (args, successCallback, errorCallback) {
     var memthodName = 'deleteUser'
-    Vue.http.delete('http://127.0.0.1:8084/api/users/' + args.userId).then(response => {
+    Vue.http.delete(window.API_GATEWAY_URL + '/api/aggregation/users/' + args.userId).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
