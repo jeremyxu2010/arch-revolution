@@ -15,7 +15,7 @@
     <artifactId>demo1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo1</name>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -41,6 +41,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

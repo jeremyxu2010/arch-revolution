@@ -69,4 +69,10 @@ public class BlogController {
 
         return new ResponseEntity(blogId, HttpStatus.OK);
     }
+
+    @DeleteMapping("/blogs/by_userId/{userId}")
+    public ResponseEntity deleteBlogsByUserId(@PathVariable("userId") int userId){
+        blogService.deleteByUserId(userId);
+        return new ResponseEntity(userId, HttpStatus.OK);
+    }
 }
