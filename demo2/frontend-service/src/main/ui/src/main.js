@@ -1,6 +1,15 @@
 import Vue from 'vue'
-// eslint-disable-next-line
-import _ from './logger.js'
+import vueLogger from 'vue-logger'
+import VueResource from 'vue-resource'
+Vue.use(vueLogger, {
+  prefix: () => new Date(),
+  dev: true,
+  shortname: true,
+  levels: ["log", "warn", "debug", "error", "dir"],
+  forceLevels: []
+});
+Vue.use(require('vue-moment'));
+Vue.use(VueResource)
 
 import App from './App.vue'
 import Router from './router.js'

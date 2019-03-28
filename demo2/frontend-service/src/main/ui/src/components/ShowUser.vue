@@ -41,8 +41,13 @@ export default {
             user: {}
         }
     },
+    methods: {
+      getUser: function () {
+        UserService.getUserById({userId: this.$route.params.id}, user => { this.user = user; }, errMsg => { Vue.console.error(errMsg); })
+      }
+    },
     mounted: function() {
-      UserService.getUserById({userId: this.$route.params.id}, user => { this.user = user; }, errMsg => { Vue.console.error(errMsg); })
+      this.getUser()
     }
 }
 </script>

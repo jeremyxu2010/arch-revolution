@@ -37,6 +37,7 @@ public class AggregationServiceImpl implements AggregationService {
         // 再补充其它关联字段
         for(Blog b : blogs){
             BlogDTO blog = convertToBlogDTO(b);
+            result.add(blog);
         }
         return result;
     }

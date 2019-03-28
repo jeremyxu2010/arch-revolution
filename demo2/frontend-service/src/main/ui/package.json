@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "core-js": "2",
+    "moment": "^2.24.0",
     "vue": "^2.6.6",
     "vue-logger": "^0.0.4",
+    "vue-moment": "^4.0.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2"
   },

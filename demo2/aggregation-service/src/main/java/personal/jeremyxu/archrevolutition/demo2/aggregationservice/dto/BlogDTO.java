@@ -1,5 +1,7 @@
 package personal.jeremyxu.archrevolutition.demo2.aggregationservice.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,6 +12,7 @@ public class BlogDTO {
     private int id;
     private String title;
     private String content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date pubDate;
     private Integer userId;
     private String nickname;

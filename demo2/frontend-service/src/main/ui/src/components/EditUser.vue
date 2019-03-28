@@ -55,10 +55,13 @@ export default {
                 password: this.user.password
             };
             UserService.editUser({userId: this.user.id, user: newUser}, () => {this.$router.push( { path: '/user/list' });}, errMsg => {Vue.console.error(errMsg)})
+        },
+        getUser: function () {
+          UserService.getUserById({userId: this.$route.params.id}, user => { this.user = user; }, errMsg => { Vue.console.error(errMsg); })
         }
     },
     mounted: function() {
-        UserService.getUserById({userId: this.$route.params.id}, user => { this.user = user; }, errMsg => { Vue.console.error(errMsg); })
+        this.getUser()
     }
 }
 </script>

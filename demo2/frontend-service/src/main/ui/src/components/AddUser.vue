@@ -20,7 +20,7 @@
         <input type="text" class="form-control" id="password" name="password" placeholder="Enter Password:" v-model="user.password"/>
       </div>
       <div class="form-group">
-        <a v-on:click="editUser" type="button" class="btn btn-sm btn-success" >提交</a>
+        <a v-on:click="addUser" type="button" class="btn btn-sm btn-success" >提交</a>
       </div>
     </form>
   </div>
@@ -43,7 +43,7 @@ export default {
       }
   },
   methods: {
-      editUser: function () {
+      addUser: function () {
           let newUser = {
               nickname: this.user.nickname,
               firstName: this.user.firstName,

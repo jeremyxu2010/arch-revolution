@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
-const getUserList = function(args, successCallback, errorCallback) {
-    var memthodName = 'getUserList'
-    Vue.http.get(window.API_GATEWAY_URL + '/api/users').then(response => {
+const getBlogList = function(args, successCallback, errorCallback) {
+    var memthodName = 'getBlogList'
+    Vue.http.get(window.API_GATEWAY_URL + '/api/aggregation/blogs').then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -15,9 +15,9 @@ const getUserList = function(args, successCallback, errorCallback) {
     })
 }
 
-const getUserById = function (args, successCallback, errorCallback) {
-    var memthodName = 'getUserById'
-    Vue.http.get(window.API_GATEWAY_URL + '/api/users/' + args.userId).then(response => {
+const getBlogById = function (args, successCallback, errorCallback) {
+    var memthodName = 'getBlogById'
+    Vue.http.get(window.API_GATEWAY_URL + '/api/aggregation/blogs/' + args.blogId).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -30,9 +30,9 @@ const getUserById = function (args, successCallback, errorCallback) {
     })
 }
 
-const editUser = function (args, successCallback, errorCallback) {
-    var memthodName = 'getUserById'
-    Vue.http.put(window.API_GATEWAY_URL + '/api/users/' + args.userId, args.user).then(response => {
+const editBlog = function (args, successCallback, errorCallback) {
+    var memthodName = 'editBlog'
+    Vue.http.put(window.API_GATEWAY_URL + '/api/blogs/' + args.blogId, args.blog).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -45,9 +45,9 @@ const editUser = function (args, successCallback, errorCallback) {
     })
 }
 
-const addUser = function (args, successCallback, errorCallback) {
-    var memthodName = 'getUserById'
-    Vue.http.post(window.API_GATEWAY_URL + '/api/users', args.user).then(response => {
+const addBlog = function (args, successCallback, errorCallback) {
+    var memthodName = 'addBlog'
+    Vue.http.post(window.API_GATEWAY_URL + '/api/blogs', args.blog).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -60,9 +60,9 @@ const addUser = function (args, successCallback, errorCallback) {
     })
 }
 
-const deleteUser = function (args, successCallback, errorCallback) {
-    var memthodName = 'deleteUser'
-    Vue.http.delete(window.API_GATEWAY_URL + '/api/aggregation/users/' + args.userId).then(response => {
+const deleteBlog = function (args, successCallback, errorCallback) {
+    var memthodName = 'deleteBlog'
+    Vue.http.delete(window.API_GATEWAY_URL + '/api/blogs/' + args.blogId).then(response => {
         if (response.status !== 200) {
             Vue.console.log("status: " + response.status + ", body: " + response.body)
             errorCallback(memthodName + ' request failed')
@@ -76,9 +76,9 @@ const deleteUser = function (args, successCallback, errorCallback) {
 }
 
 export default {
-    getUserList,
-    getUserById,
-    editUser,
-    addUser,
-    deleteUser
+    getBlogList,
+    getBlogById,
+    editBlog,
+    addBlog,
+    deleteBlog
 }
