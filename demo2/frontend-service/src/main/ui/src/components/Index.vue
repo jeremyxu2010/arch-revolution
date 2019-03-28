@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <h1>这里是SpringMVC Demo首页</h1>
+    <h1>这里是Demo首页</h1>
 
     <h1>功能列表</h1>
     <ul>

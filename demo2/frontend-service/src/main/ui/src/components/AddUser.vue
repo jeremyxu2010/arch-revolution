@@ -1,6 +1,6 @@
 <template>
   <div class="add-user container">
-    <h1>SpringMVC 添加用户</h1>
+    <h1>添加用户</h1>
     <hr/>
     <form method="post" role="form">
       <div class="form-group">

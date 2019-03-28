@@ -1,6 +1,6 @@
 <template>
   <div class="add-blog container">
-    <h1>SpringMVC 添加博客</h1>
+    <h1>添加博客</h1>
     <hr/>
     <form method="post" role="form">
       <div class="form-group">
@@ -12,7 +12,7 @@
         <label for="userByUserId.id">Author:</label>
         <select class="form-control" id="userByUserId.id" name="userByUserId.id" v-model="blog.userId">
           <template v-for="user in userList">
-            <option :value="user.id">{{user.nickname}}, {{user.firstName}} {{user.lastName}}</option>
+            <option v-bind:key="user.id" :value="user.id">{{user.nickname}}, {{user.firstName}} {{user.lastName}}</option>
           </template>
         </select>
       </div>

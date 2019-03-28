@@ -22,15 +22,15 @@ import EditBlog from "./components/EditBlog";
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
 const routes = [
-  {path: '/', component: Index, meta: {title: 'SpringMVC Demo 首页'}},
-  {path: '/user/list', component: ListUser, meta: {title: 'SpringMVC 用户管理'}},
-  {path: '/user/show/:id', component: ShowUser, meta: {title: 'SpringMVC 用户详情'}},
-  {path: '/user/add', component: AddUser, meta: {title: "SpringMVC 添加用户"}},
-  {path: '/user/edit/:id', component: EditUser, meta: {title: 'SpringMVC Demo 更新用户'}},
-  {path: '/blog/list', component: ListBlog, meta: {title: 'SpringMVC 博客管理'}},
-  {path: '/blog/add', component: AddBlog, meta: {title: 'SpringMVC 添加博客'}},
-  {path: '/blog/show/:id', component: ShowBlog, meta: {title: 'SpringMVC 博客详情'}},
-  {path: '/blog/edit/:id', component: EditBlog, meta: {title: 'SpringMVC 更新博客'}},
+  {path: '/', component: Index, meta: {title: 'Demo 首页'}},
+  {path: '/user/list', component: ListUser, meta: {title: '用户管理'}},
+  {path: '/user/show/:id', component: ShowUser, meta: {title: '用户详情'}},
+  {path: '/user/add', component: AddUser, meta: {title: "添加用户"}},
+  {path: '/user/edit/:id', component: EditUser, meta: {title: '更新用户'}},
+  {path: '/blog/list', component: ListBlog, meta: {title: '博客管理'}},
+  {path: '/blog/add', component: AddBlog, meta: {title: '添加博客'}},
+  {path: '/blog/show/:id', component: ShowBlog, meta: {title: '博客详情'}},
+  {path: '/blog/edit/:id', component: EditBlog, meta: {title: '更新博客'}},
   {path: '/help', component: Help}
 ];
 
@@ -40,7 +40,7 @@ const router = new VueRouter({
   routes // (缩写) 相当于 routes: routes
 });
 
-const DEFAULT_TITLE = 'SpringMVC Demo';
+const DEFAULT_TITLE = 'Demo';
 // eslint-disable-next-line
 router.afterEach((to, from) => {
   document.title = to.meta.title || DEFAULT_TITLE;

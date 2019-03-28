@@ -1,6 +1,6 @@
 <template>
   <div class="show-blog container">
-    <h1>SpringMVC 博文详情</h1>
+    <h1>博文详情</h1>
     <hr/>
     <table class="table table-bordered table-striped">
       <tbody>

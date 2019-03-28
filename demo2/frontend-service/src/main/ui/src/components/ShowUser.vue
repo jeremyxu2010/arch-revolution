@@ -1,6 +1,6 @@
 <template>
   <div class="show-user container">
-    <h1>SpringMVC 用户详情</h1>
+    <h1>用户详情</h1>
     <hr/>
 
     <table class="table table-bordered table-striped">

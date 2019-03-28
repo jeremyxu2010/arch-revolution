@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>SpringMVC 博客系统-博客管理</h1>
+    <h1>博客系统-博客管理</h1>
     <hr/>
 
     <h3>所有博客 <router-link to="/blog/add" type="button" class="btn btn-primary btn-sm">添加</router-link></h3>
@@ -22,7 +22,7 @@
         </tr>
 
         <template v-for="blog in blogList">
-          <tr>
+          <tr v-bind:key="blog.id">
             <td>{{blog.id}}</td>
             <td>{{blog.title}}</td>
             <td>{{blog.nickname}}, {{blog.firstName}} {{blog.lastName}}</td>
@@ -41,7 +41,6 @@
 
 <script>
 import Vue from 'vue'
-import UserService from '../services/UserService.js'
 import BlogService from "../services/BlogService";
 
 export default {

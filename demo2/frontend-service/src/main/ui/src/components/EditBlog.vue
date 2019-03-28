@@ -1,6 +1,6 @@
 <template>
   <div class="edit-blog container">
-    <h1>SpringMVC 修改博客</h1>
+    <h1>修改博客</h1>
     <hr/>
     <form method="post" role="form">
       <div class="form-group">

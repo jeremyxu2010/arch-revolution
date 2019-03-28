@@ -1,6 +1,6 @@
 <template>
   <div class="edit-user container">
-    <h1>SpringMVC 更新用户信息</h1>
+    <h1>更新用户信息</h1>
     <hr/>
 
     <form method="post" role="form">

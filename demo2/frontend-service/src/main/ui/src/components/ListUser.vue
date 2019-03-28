@@ -1,6 +1,6 @@
 <template>
   <div class="container list-user">
-    <h1>SpringMVC 博客系统-用户管理</h1>
+    <h1>博客系统-用户管理</h1>
     <hr/>
 
     <h3>所有用户 <router-link to="/user/add" type="button" class="btn btn-primary btn-sm">添加</router-link></h3>
