@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>personal.jeremyxu.archrevolutition</groupId>
-        <artifactId>demo2</artifactId>
+        <artifactId>demo3</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>personal.jeremyxu.archrevolutition.demo2</groupId>
+    <groupId>personal.jeremyxu.archrevolutition.demo3</groupId>
     <artifactId>frontend-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>frontend-service</name>
