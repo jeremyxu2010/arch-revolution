@@ -2,11 +2,27 @@
 
 1. 禁用服务注册
 
-由istio纳管后，服务实例的注册将在部署阶段完成，因此不再需要依赖consul服务注册中心，也不需要向consul注册服务，直接将`application.properties`里的`spring.cloud.consul.discovery.register`设置为`fase`即可。
+由istio纳管后，服务实例的注册将在部署阶段完成，因此不再需要依赖consul服务注册中心，也不需要向consul注册服务，进行以下两步操作就可以了。
 
-```properties
-spring.cloud.consul.discovery.register=false
-```
+* `application.properties`里的`spring.cloud.consul.discovery.register`设置为`fase`即可
+
+  `application.properties`
+
+  ```properties
+  spring.cloud.consul.discovery.register=false
+  ```
+
+* 各微服务模块去除对`spring-cloud-starter-consul-discovery`的maven依赖
+
+  `pom.xml`
+
+  ```xml
+  <!--<dependency>-->
+  	<!--<groupId>org.springframework.cloud</groupId>-->
+  	<!--<artifactId>spring-cloud-starter-consul-discovery</artifactId>-->
+  <!--</dependency>-->
+  ```
+
 
 2. 由istio纲管后，服务之前的调用将由envoy拦截请求，并自动发现要调用的服务实例，因此调用其它服务时，须禁用原来的服务机制，而改为以`服务名称+端口`方式调用。
 
@@ -184,7 +200,7 @@ spring.cloud.consul.discovery.register=false
    #ribbon.connectTimeout=60000
    ```
 
-5. 禁用feign调用的熔断特性
+4. 禁用feign调用的熔断特性
 
    应用间调用由istio接管后，服务间调用熔断由istio进行配置管理，不应该在Spring Cloud应用中继续设置了，因此需要禁用该功能，这个一般在应用的配置文件中进行配置即可，如下：
 
@@ -192,7 +208,7 @@ spring.cloud.consul.discovery.register=false
    feign.hystrix.enabled=false
    ```
 
-6. 应用传递调用链信息
+5. 应用传递调用链信息
 
    为保证最终呈现的服务调用链信息完整，istio要求应用必须在调用过程中负责传递相关的请求头，见[这里](https://archive.istio.io/v1.0/docs/tasks/telemetry/distributed-tracing/#understanding-what-happened)。为了简化改造所需的操作，这里提供一个快速方案，在调用其它服务的模块中直接添加一个maven依赖即可。
 
@@ -234,7 +250,7 @@ source blog-service/demo3_blog_db.sql;
 
 相应地修改应用的配置文件`user-service/src/main/resources/application.properties`、`blog-service/src/main/resources/application.properties`，特别注意数据库连接相应字段的设置。
 
-另外为了不绑定IP地址，在应用里均使用`consul-service`、`mysql-service`指代consul、mysql的IP地址，请修改部署机上的/etc/hosts，将这两个名称指向正确的IP地址，如下：
+另外为了不绑定IP地址，在应用里均使用~~`consul-service`、~~`mysql-service`指代~~consul、~~mysql的IP地址，请修改部署机上的/etc/hosts，将这两个名称指向正确的IP地址，如下：
 
 ```
 127.0.0.1 consul-service
@@ -246,14 +262,14 @@ source blog-service/demo3_blog_db.sql;
 安装JDK8及maven后，在本机使用mvn命令对应用进行打包，参考命令如下：
 
 ```bash
-mvn package
+mvn -DskipTests=true package
 ```
 
 上述命令会将生成5个微服务模块的jar包
 
-4. 运行服务注册中心consul()
+4. ~~运行服务注册中心consul(运行时已不再依赖于consul)~~
 
-虽然不再使用它不再使用consul作为服务的注册中心了，但Spring Cloud启动时仍会连接它，因此还是将它运行起来，参考命令如下：
+~~本示例使用consul作为服务的注册中心，在运行应用前须先启动consul，参考命令如下：~~
 
 ```bash
 curl -O https://releases.hashicorp.com/consul/1.4.4/consul_1.4.4_linux_amd64.zip

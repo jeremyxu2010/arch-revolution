@@ -2,7 +2,6 @@ package personal.jeremyxu.archrevolutition.demo3.frontendservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 //禁用DiscoveryClient

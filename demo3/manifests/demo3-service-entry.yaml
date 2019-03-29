@@ -124,24 +124,3 @@ spec:
       protocol: TCP
   resolution: STATIC
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: ServiceEntry
-metadata:
-  name: consul-service
-  namespace: demo3
-spec:
-  endpoints:
-    - address: 192.168.2.200
-      labels:
-        app: consul-service
-        version: v1
-      ports:
-        http: 8500
-  hosts:
-    - consul-service.demo3.svc.cluster.local
-  ports:
-    - name: http
-      number: 8500
-      protocol: HTTP
-  resolution: STATIC
----
