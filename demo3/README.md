@@ -251,9 +251,15 @@ mvn package
 
 上述命令会将生成5个微服务模块的jar包
 
-4. ~~运行服务注册中心consul(不再需要)~~
+4. 运行服务注册中心consul()
 
-~~本示例使用consul作为服务的注册中心，在运行应用前须先启动consul，参考命令如下：~~
+虽然不再使用它不再使用consul作为服务的注册中心了，但Spring Cloud启动时仍会连接它，因此还是将它运行起来，参考命令如下：
+
+```bash
+curl -O https://releases.hashicorp.com/consul/1.4.4/consul_1.4.4_linux_amd64.zip
+unzip consul_1.4.4_linux_amd64.zip
+./consul agent -dev -server -ui -client=0.0.0.0
+```
 
 5. 提前在虚拟机上设置服务名至ip地址的映射，修改`/etc/hosts`文件:
 
@@ -294,6 +300,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
 * 虚拟机要能打通到istio控制面service，pod的网络，能ping通kubernetes里pod的IP，能通过clusterIP telnet通kubernetes里的服务，这个可以在虚拟机上添加两条路由规则实现。
 * 虚拟机上能解析kubernetes里长服务域名(istio-pilot.istio-system.svc.cluster.local)及短服务域名(istio-pilot.istio-system)，这个可以通过在虚拟机上安装dnsmasq，将DNS指向它，并进行相关设置解决。
 * 由于istio官方没有提供centos7下的istio-sidecar软件包，因此需要[参考文档-1.5 安装istio_sidecar](https://git.code.oa.com/tshift/tshit/blob/master/components/thirdparty-integration/istio_mesh_expansion/istio_mesh_expansion.md)手动安装istio-sidecar，**后续考虑封装istio-sidecar的rpm包以简化该步操作**。
+* 虚拟机要修改时区为GMT，同时虚拟机保持与istio控制平面的时间同步
 
 9. 创建应用对应的命名空间
 
@@ -332,23 +339,31 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
 
     其中`ISTIO_SVC_IP`为虚拟机的ip地址。
 
-12. 将虚拟机上的各微服务注册为kubernetes里的`selector-less`服务
+12. 将虚拟机上各微服务注册为ServiceEntry
 
-    为了让服务间能够相互调用，须将虚拟机上的各微服务注册为kubernetes里的`selector-less`服务，参考命令如下：
+    istio中通过将一些外部服务注册为ServiceEntry，以便将这些服务纳入Pilot的抽象模型，在服务网格中的其它服务即可发现它们，参考命令如下：
+
+    ```bash
+    kubectl -n demo3 apply -f manifests/demo3-service-entry.yaml
+    ```
+
+13. 将虚拟机上的各微服务注册为kubernetes里的`selector-less`服务
+
+    为了使DNS能正确解析服务的全域名，须将虚拟机上的各微服务注册为kubernetes里的`selector-less`服务，参考命令如下：
 
     ```bash
     kubectl -n demo3 apply -f manifests/demo3-selector-less-svc.yaml
     ```
 
-13. 导入istio流量路由规则
+14. 导入istio流量路由规则
 
-    使用istioctl命令导入istio的流量路由规则，参考命令如下：
+    导入istio的流量路由规则，参考命令如下：
 
     ```bash
-    istioctl -n demo3 apply -f manifests/demo3-istio-route-rules.yaml
+    kubectl -n demo3 apply -f manifests/demo3-istio-route-rules.yaml
     ```
 
-14. 停止正在运行的微服务应用，参考命令如下：
+15. 停止正在运行的微服务应用，参考命令如下：
 
     ```bash
     ps -ef|grep 'frontend\-service'|grep -v grep|awk '{print $2}'|xargs kill -15
@@ -358,7 +373,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     ps -ef|grep 'user\-service'|grep -v grep|awk '{print $2}'|xargs kill -15
     ```
 
-15. 取消服务名到ip地址的映射
+16. 取消服务名到ip地址的映射
 
     当服务间调用的流量被istio劫持后，不再需要在`/etc/hosts`中指向各服务名到ip地址的映射，因此取消。
 
@@ -374,14 +389,14 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     #127.0.0.1 frontend-service
     ```
 
-16. 启动istio相关的服务，参考命令如下：
+17. 启动istio相关的服务，参考命令如下：
 
     ```bash
     sudo systemctl start istio-auth-node-agent
     sudo systemctl start istio    
     ```
-    
-17. 将API网关地址修改为正确的域名
+
+18. 将API网关地址修改为正确的域名
 
     `frontend-service/src/main/resources/application.properties`
 
@@ -389,7 +404,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     app.apiGatewayUrl=http://demo3.arch-revolution.tcnp-dev.oa.com
     ```
 
-18. 以非root用户重新启动各微服务模块
+19. 以非root用户重新启动各微服务模块
 
     由于istio-sidecar不拦截root用户的流量，因此需要新建用户，并以该用户运行各微服务模块，参考命令如下：
 
@@ -397,11 +412,13 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     sudo groupadd demo3
     sudo useradd -g demo3 demo3
     
-    su - demo3 -c "bash -c 'java -jar user-service/target/user-service-0.0.1-SNAPSHOT.jar > user-service.log 2>&1 &'"
-    su - demo3 -c "bash -c 'java -jar blog-service/target/blog-service-0.0.1-SNAPSHOT.jar > blog-service.log 2>&1 &'"
-    su - demo3 -c "bash -c 'java -jar aggregation-service/target/aggregation-service-0.0.1-SNAPSHOT.jar > aggregation-service.log 2>&1 &'"
-    su - demo3 -c "bash -c 'java -jar apigateway-service/target/apigateway-service-0.0.1-SNAPSHOT.jar > apigateway-service.log 2>&1 &'"
-    su - demo3 -c "bash -c 'java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend-service.log 2>&1 &'"
+    # 切换为demo3用户，以demo3用户运行各微服务模块
+    su - demo3
+    java -jar user-service/target/user-service-0.0.1-SNAPSHOT.jar > user-service.log 2>&1 &
+    java -jar blog-service/target/blog-service-0.0.1-SNAPSHOT.jar > blog-service.log 2>&1 &
+    java -jar aggregation-service/target/aggregation-service-0.0.1-SNAPSHOT.jar > aggregation-service.log 2>&1 &
+    java -jar apigateway-service/target/apigateway-service-0.0.1-SNAPSHOT.jar > apigateway-service.log 2>&1 &
+    java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend-service.log 2>&1 &
     ```
 
 至此，整个demo3应用即部署到虚拟机，并由istio纳管了。可用浏览器访问`http://demo3.arch-revolution.tcnp-dev.oa.com`以观察各个demo3应用是否正常。
