@@ -1,0 +1,256 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: user-service
+    version: v1
+  name: user-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "8081"
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: user-service
+    version: v1
+  name: user-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "8081"
+        port: 8081
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: blog-service
+    version: v1
+  name: blog-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "8082"
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: blog-service
+    version: v1
+  name: blog-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "8082"
+        port: 8082
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: aggregation-service
+    version: v1
+  name: aggregation-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "8083"
+      port: 8083
+      protocol: TCP
+      targetPort: 8083
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: aggregation-service
+    version: v1
+  name: aggregation-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "8083"
+        port: 8083
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: apigateway-service
+    version: v1
+  name: apigateway-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "8084"
+      port: 8084
+      protocol: TCP
+      targetPort: 8084
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: apigateway-service
+    version: v1
+  name: apigateway-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "8084"
+        port: 8084
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend-service
+    version: v1
+  name: frontend-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "8085"
+      port: 8085
+      protocol: TCP
+      targetPort: 8085
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: frontend-service
+    version: v1
+  name: frontend-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "8085"
+        port: 8085
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql-service
+    version: v1
+  name: mysql-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "3306"
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: mysql-service
+    version: v1
+  name: mysql-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "3306"
+        port: 3306
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis-service
+    version: v1
+  name: redis-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "6379"
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: redis-service
+    version: v1
+  name: redis-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "6379"
+        port: 6379
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rabbitmq-service
+    version: v1
+  name: rabbitmq-service
+  namespace: demo4
+spec:
+  ports:
+    - name: "5672"
+      port: 5672
+      protocol: TCP
+      targetPort: 5672
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app: rabbitmq-service
+    version: v1
+  name: rabbitmq-service
+  namespace: demo4
+subsets:
+  - addresses:
+      - ip: 192.168.2.200
+    ports:
+      - name: "5672"
+        port: 5672
+        protocol: TCP
+---
