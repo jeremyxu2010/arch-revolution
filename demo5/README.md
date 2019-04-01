@@ -195,6 +195,8 @@ kubectl label namespace demo5 istio-injection=enabled
 kubectl --namespace demo5 apply -f manifests/demo5-istio-route-rules.yaml
 ```
 
+istio纳管后，在浏览器中访问`http://demo5-istio.arch-revolution.tcnp-dev.oa.com`
+
 ## 应用水平扩展
 
 当某个微服务模块的压力过大，需要水平扩展时，只需要新建一个`custom_values.yaml`文件，内容如下：
