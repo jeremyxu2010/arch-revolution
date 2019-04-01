@@ -31,6 +31,8 @@
 
 详细的优化原因及优化方案请参考[demo4的README](demo4/README.md)。
 
-## 5. 微服务应用容器化
+## 5. 微服务应用云原生化
 
 `demo5`在`demo4`的基础上，将应用各模块打包成容器镜像，并以标准的[Chart](https://helm.sh/docs/developing_charts/)包形式描述整个应用部署信息，便于部署到kubernetes里去，以实现真正的应用云原生化。
+
+应用云原生化的目的、改造步骤等请参考[demo5的README](demo5/README.md)。
