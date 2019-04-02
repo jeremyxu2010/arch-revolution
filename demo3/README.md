@@ -316,7 +316,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
 * 虚拟机要能打通到istio控制面service，pod的网络，能ping通kubernetes里pod的IP，能通过clusterIP telnet通kubernetes里的服务，这个可以在虚拟机上添加两条路由规则实现。
 * 虚拟机上能解析kubernetes里长服务域名(istio-pilot.istio-system.svc.cluster.local)及短服务域名(istio-pilot.istio-system)，这个可以通过在虚拟机上安装dnsmasq，将DNS指向它，并进行相关设置解决。
 * 由于istio官方没有提供centos7下的istio-sidecar软件包，因此需要[参考文档-1.5 安装istio_sidecar](https://git.code.oa.com/tshift/tshit/blob/master/components/thirdparty-integration/istio_mesh_expansion/istio_mesh_expansion.md)手动安装istio-sidecar，**后续考虑封装istio-sidecar的rpm包以简化该步操作**。
-* 虚拟机要修改时区为GMT，同时虚拟机保持与istio控制平面的时间同步
+* 虚拟机要保持与istio控制平面的时间同步
 
 9. 创建应用对应的命名空间
 
@@ -347,7 +347,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
 
     ```
     ...
-    # 多个端口用逗号隔开，如8081,8082
+    # 多个端口用逗号隔开，如8081,8082，因为envoy拦截虚拟机上的mysql会导致mysql不可连，这里不拦截mysql服务
     ISTIO_INBOUND_PORTS=8081,8082,8083,8084,8085
     ISTIO_NAMESPACE=demo3
     ISTIO_SVC_IP=192.168.2.200
@@ -376,7 +376,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     导入istio的流量路由规则，参考命令如下：
 
     ```bash
-    kubectl -n demo3 apply -f manifests/demo3-istio-route-rules.yaml
+    kubectl -n demo3 apply -f manifests/demo3-istio-route-rules.yaml    
     ```
 
 15. 停止正在运行的微服务应用，参考命令如下：
@@ -405,14 +405,40 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     #127.0.0.1 frontend-service
     ```
 
-17. 启动istio相关的服务，参考命令如下：
+17. 在kubedns中指定上述服务的Service IP，
+
+    因为在应用中使用了服务的短名，为了让这些服务名称被正确解析，新增以下名字解析定义，参考命令如下：
+
+    ```bash
+    USER_SVC_IP=$(kubectl -n demo3 get svc user-service -o=jsonpath={.spec.clusterIP})
+    BLOG_SVC_IP=$(kubectl -n demo3 get svc blog-service -o=jsonpath={.spec.clusterIP})
+    AGGREGATION_SVC_IP=$(kubectl -n demo3 get svc aggregation-service -o=jsonpath={.spec.clusterIP})
+    APIGATEWAY_SVC_IP=$(kubectl -n demo3 get svc apigateway-service -o=jsonpath={.spec.clusterIP})
+    FRONTEND_SVC_IP=$(kubectl -n demo3 get svc frontend-service -o=jsonpath={.spec.clusterIP})
+    # envoy拦截虚拟机上的mysql会导致mysql不可连，直接指定mysql服务的IP地址
+    MYSQL_SVC_IP=127.0.0.1
+    
+    cat << EOF >> /etc/dnsmasq.d/kubedns
+    address=/user-service/${USER_SVC_IP}
+    address=/blog-service/${BLOG_SVC_IP}
+    address=/aggregation-service/${AGGREGATION_SVC_IP}
+    address=/apigateway-service/${APIGATEWAY_SVC_IP}
+    address=/frontend-service/${FRONTEND_SVC_IP}
+    address=/mysql-service/${MYSQL_SVC_IP}
+    EOF
+    
+    # 重启dnsmasq服务
+    systemctl restart dnsmasq.service 
+    ```
+
+18. 启动istio相关的服务，参考命令如下：
 
     ```bash
     sudo systemctl start istio-auth-node-agent
     sudo systemctl start istio    
     ```
 
-18. 将API网关地址修改为正确的域名
+19. 将API网关地址修改为正确的域名
 
     `frontend-service/src/main/resources/application.properties`
 
@@ -420,7 +446,7 @@ java -jar frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar > frontend
     app.apiGatewayUrl=http://demo3.arch-revolution.tcnp-dev.oa.com
     ```
 
-19. 以非root用户重新启动各微服务模块
+20. 以非root用户重新启动各微服务模块
 
     由于istio-sidecar不拦截root用户的流量，因此需要新建用户，并以该用户运行各微服务模块，参考命令如下：
 

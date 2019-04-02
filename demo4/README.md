@@ -251,3 +251,4 @@ demo3已经是一个比较良好的微服务架构应用，并且由istio纳管�
 # 部署指引
 
 部署方法与demo3相比很类似，只是需要提前启动redis-server、rabbitmq-server，这个参考[redis-server](https://redis.io/documentation)、[rabbitmq-server](https://www.rabbitmq.com/download.html)的官方文档，这里就不赘述了。
+要注意为了让程序能识别`redis-service`、`rabbitmq-service`这两个服务名，需要提前将这两个服务名的定义添加到`/etc/dnsmasq.d/kubedns`中。

@@ -15,6 +15,7 @@ public class SpringCloudTracingWebWvcInterceptor extends HandlerInterceptorAdapt
 
     private static final String TRACE_ID_HEADER_NAME = "uber-trace-id";
     private static final String BAGGAGE_HEADER_PREFIX = "uberctx-";
+    private static final String X_B3_HEADER_PREFIX = "x-b3-";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,8 +29,12 @@ public class SpringCloudTracingWebWvcInterceptor extends HandlerInterceptorAdapt
             if(headerName != null && headerName.toLowerCase().startsWith(BAGGAGE_HEADER_PREFIX)){
                 tracingCtxInfo.put(headerName, request.getHeader(headerName));
             }
+            if(headerName != null && headerName.toLowerCase().startsWith(X_B3_HEADER_PREFIX)){
+                tracingCtxInfo.put(headerName, request.getHeader(headerName));
+            }
         }
         SpringCloudTracingStorage.storeTracingCtxInfo(tracingCtxInfo);
         return super.preHandle(request, response, handler);
     }
 }
+

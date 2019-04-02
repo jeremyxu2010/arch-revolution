@@ -8,7 +8,7 @@ metadata:
   namespace: demo4
 spec:
   ports:
-    - name: "8081"
+    - name: "http"
       port: 8081
       protocol: TCP
       targetPort: 8081
@@ -26,7 +26,7 @@ subsets:
   - addresses:
       - ip: 192.168.2.200
     ports:
-      - name: "8081"
+      - name: "http"
         port: 8081
         protocol: TCP
 ---
@@ -40,7 +40,7 @@ metadata:
   namespace: demo4
 spec:
   ports:
-    - name: "8082"
+    - name: "http"
       port: 8082
       protocol: TCP
       targetPort: 8082
@@ -58,7 +58,7 @@ subsets:
   - addresses:
       - ip: 192.168.2.200
     ports:
-      - name: "8082"
+      - name: "http"
         port: 8082
         protocol: TCP
 ---
@@ -72,7 +72,7 @@ metadata:
   namespace: demo4
 spec:
   ports:
-    - name: "8083"
+    - name: "http"
       port: 8083
       protocol: TCP
       targetPort: 8083
@@ -90,7 +90,7 @@ subsets:
   - addresses:
       - ip: 192.168.2.200
     ports:
-      - name: "8083"
+      - name: "http"
         port: 8083
         protocol: TCP
 ---
@@ -104,7 +104,7 @@ metadata:
   namespace: demo4
 spec:
   ports:
-    - name: "8084"
+    - name: "http"
       port: 8084
       protocol: TCP
       targetPort: 8084
@@ -122,7 +122,7 @@ subsets:
   - addresses:
       - ip: 192.168.2.200
     ports:
-      - name: "8084"
+      - name: "http"
         port: 8084
         protocol: TCP
 ---
@@ -136,7 +136,7 @@ metadata:
   namespace: demo4
 spec:
   ports:
-    - name: "8085"
+    - name: "http"
       port: 8085
       protocol: TCP
       targetPort: 8085
@@ -154,103 +154,7 @@ subsets:
   - addresses:
       - ip: 192.168.2.200
     ports:
-      - name: "8085"
+      - name: "http"
         port: 8085
-        protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: mysql-service
-    version: v1
-  name: mysql-service
-  namespace: demo4
-spec:
-  ports:
-    - name: "3306"
-      port: 3306
-      protocol: TCP
-      targetPort: 3306
-  type: ClusterIP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  labels:
-    app: mysql-service
-    version: v1
-  name: mysql-service
-  namespace: demo4
-subsets:
-  - addresses:
-      - ip: 192.168.2.200
-    ports:
-      - name: "3306"
-        port: 3306
-        protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: redis-service
-    version: v1
-  name: redis-service
-  namespace: demo4
-spec:
-  ports:
-    - name: "6379"
-      port: 6379
-      protocol: TCP
-      targetPort: 6379
-  type: ClusterIP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  labels:
-    app: redis-service
-    version: v1
-  name: redis-service
-  namespace: demo4
-subsets:
-  - addresses:
-      - ip: 192.168.2.200
-    ports:
-      - name: "6379"
-        port: 6379
-        protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: rabbitmq-service
-    version: v1
-  name: rabbitmq-service
-  namespace: demo4
-spec:
-  ports:
-    - name: "5672"
-      port: 5672
-      protocol: TCP
-      targetPort: 5672
-  type: ClusterIP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  labels:
-    app: rabbitmq-service
-    version: v1
-  name: rabbitmq-service
-  namespace: demo4
-subsets:
-  - addresses:
-      - ip: 192.168.2.200
-    ports:
-      - name: "5672"
-        port: 5672
         protocol: TCP
 ---
