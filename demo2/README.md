@@ -1,3 +1,23 @@
+---
+typora-root-url: ./
+typora-copy-images-to: images
+---
+
+# 系统架构
+
+`demo2`是一个进行了微服务改造后的应用，其基于Spring Cloud构建。其被拆分为`user-service`、`blog-service`、`aggregation-service`、`apigateway-service`、`frontend-service`5个微服务子项目，各微服务的功能概要如下：
+
+1. `user-service`、`blog-service`分别实现对各自业务模型的restful接口； 
+2. `aggregation-service`调用`user-service`、`blog-service`，实现了跨业务模型的restful接口；
+3. `apigateway-service`通过配置，将`user-service`、`blog-service`、`aggregation-service`的restful接口以统一的形式对暴露API接口; 
+4. `frontend-service`采用[Vue.js](https://cn.vuejs.org/index.html)重写了前端，其调用`apigateway-service`暴露的API接口，实现业务逻辑
+
+各微服务自动注册到服务注册中心(Consul)，各微服务相互调用时通过服务发现找到对方。
+
+其架构图如下：
+
+![1554261867844](images/1554261867844.png)
+
 # 部署指引
 
 1. 新建数据库
@@ -34,7 +54,7 @@ source blog-service/demo2_blog_db.sql;
 安装JDK8及maven后，在本机使用mvn命令对应用进行打包，参考命令如下：
 
 ```bash
-mvn package
+mvn -DskipTests=true package
 ```
 
 上述命令会将生成5个微服务模块的jar包

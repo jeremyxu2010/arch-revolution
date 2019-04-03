@@ -1,4 +1,24 @@
-# 适应Istio纳管所需的调整事项
+---
+typora-root-url: ./
+typora-copy-images-to: images
+---
+
+
+
+# 系统架构
+
+`demo3`在`demo2`基础上进行了简单的调整，以适应将其部署到虚拟机，并由Istio服务网格纲管的场景。最终达成的系统架构如下：
+
+![1554262202976](images/1554262202976.png)
+
+注意事项：
+
+1. 因为在服务被istio纳管的过程中，会将各个微服务包装成kubernetes里的服务。因此服务间的调用可以直接用kubernetes的服务发现机制了，因此不再依赖Consul服务注册中心了。
+2. 在虚拟机中的各个微服务的HTTP请求输入输出都会被`istio-sidecar`拦截，而`istio control plane`可通过`xDS`控制`istio sidecar`的拦截代理功能。
+
+# 调整事项
+
+要让原来的Spring Cloud应用能被istio纳管，需要将Spring Cloud应用中原有的一些微服务能力禁用掉，这个涉及一系列的改造调整项，这里简述如下：
 
 1. 禁用服务注册
 

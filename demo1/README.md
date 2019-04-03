@@ -1,3 +1,14 @@
+---
+typora-root-url: ./
+typora-copy-images-to: images
+---
+
+# 系统架构
+
+`demo1`是一个传统的单体应用，其基于Spring Boot构建，整体采用成熟的MVC分层架构，传统绝大多数Java应用都是这种架构。采用JSP作为视图层，采用SpringMVC架构实现控制层，业务数据保存在外部mysql数据库中，所有各层模块等均被揉合在一个项目中，如下图所示。
+
+![1554259427364](images/1554259427364.png)
+
 # 部署指引
 
 1. 新建数据库
@@ -24,7 +35,7 @@ source demo1.sql
 安装JDK8及maven后，在本机使用mvn命令对应用进行打包，参考命令如下：
 
 ```bash
-mvn package
+mvn -DskipTests=true package
 ```
 
 4. 部署应用到tomcat
