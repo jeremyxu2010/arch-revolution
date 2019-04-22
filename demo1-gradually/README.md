@@ -9,7 +9,7 @@ typora-copy-images-to: images
 
 最后的系统架构图如下：
 
-![1555931418313](images/1555931418313.png)
+![1555936126915](images/1555936126915.png)
 
 # 拆分步骤
 
@@ -56,10 +56,9 @@ source user-service/demo1gradually_user_db.sql
 
 修改`user-service`微服务模块的应用配置文件`user-service/src/main/resources/application.properties`，特别注意数据库连接相应字段的设置
 
-另外为了不绑定IP地址，在应用里均使用`consul-service`、`mysql-service`指代consul、mysql的IP地址，请修改部署机上的/etc/hosts，将这两个名称指向正确的IP地址，如下：
+另外为了不绑定IP地址，在应用里均使用`mysql-service`指代mysql的IP地址，请修改部署机上的/etc/hosts，将这两个名称指向正确的IP地址，如下：
 
 ```
-127.0.0.1 consul-service
 127.0.0.1 mysql-service
 ```
 
@@ -73,27 +72,17 @@ mvn -DskipTests=true package
 
 上述命令会将生成1个war包及一个jar包
 
-4. 运行服务注册中心consul(运行时已不再依赖于consul)
-
-本示例使用consul作为服务的注册中心，在运行应用前须先启动consul，参考命令如下：
-
-```bash
-curl -O https://releases.hashicorp.com/consul/1.4.4/consul_1.4.4_linux_amd64.zip
-unzip consul_1.4.4_linux_amd64.zip
-./consul agent -dev -server -ui -client=0.0.0.0
-```
-
-5. 提前在虚拟机上设置服务名至ip地址的映射，修改`/etc/hosts`文件:
+4. 提前在虚拟机上设置服务名至ip地址的映射，修改`/etc/hosts`文件:
 
    ```
    127.0.0.1 user-service
    ```
 
-6. 部署应用到tomcat
+5. 部署应用到tomcat
 
 上面的命令会生成应用的war包`demo1/target/demo1-0.0.1-SNAPSHOT.war`，将war包部署到Tomcat9上即可，具体可参考[Tomcat的官方文档](http://tomcat.apache.org/tomcat-9.0-doc/deployer-howto.html)。
 
-7. 启动user-service微服务模块
+6. 启动user-service微服务模块
 
 参考命令如下：
 
@@ -101,5 +90,5 @@ unzip consul_1.4.4_linux_amd64.zip
 java -jar user-service/target/user-service-0.0.1-SNAPSHOT.jar > user-service.log 2>&1 &
 ```
 
-第6步及第7步都完成后，即可用浏览器访问`http://${tomcat-server-ip}:8080`即可。
+第5步及第6步都完成后，即可用浏览器访问`http://${tomcat-server-ip}:8080`即可。
 
