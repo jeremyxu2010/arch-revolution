@@ -31,3 +31,9 @@
 `demo5`在`demo4`的基础上，将应用各模块打包成容器镜像，并以标准的[Chart](https://helm.sh/docs/developing_charts/)包形式描述整个应用部署信息，便于部署到kubernetes里去，以实现真正的应用云原生化，真正体验到云原生应用的优势。
 
 该示例的详细说明见[demo5的README](demo5/README.md)。
+
+## 7. Go语言重写微服务模块
+
+`demo6`在`demo5`的基础上，将`user-service`这个微服务模块采用Go语言重写。
+
+该示例的详细说明见[demo6的README](demo6/README.md)。
