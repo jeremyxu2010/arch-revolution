@@ -4,10 +4,13 @@ import (
 	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/config"
 	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/log"
 	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/server"
+	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
+	jaegerconfig "github.com/uber/jaeger-client-go/config"
 	)
 
 func main() {
+	// Configure logging
 	logConfig := config.GetAppConfig().Application.Logging
 	var logger *zap.Logger
 	if logConfig.Env == "production" {
@@ -17,7 +20,16 @@ func main() {
 	}
 	defer logger.Sync() // flushes buffer, if any
 	log.ConfigureLogger(logger)
-	err := server.StartServer()
+
+	// Configure global tracer to help span context information propagation
+	tracer, closer, err := jaegerconfig.Configuration{
+		ServiceName: config.GetAppConfig().Application.Service.Name,
+	}.NewTracer()
+	defer closer.Close()
+	opentracing.SetGlobalTracer(tracer)
+
+	// Restful api server startup
+	err = server.StartServer()
 	if err != nil {
 		panic(err)
 	}
