@@ -26,3 +26,7 @@ src.build:
 .PHONY: docker.build
 docker.build:
 	docker build --rm --tag $(DOCKER_IMAGE_NAME):$(SERVER_VERSION) -f ./docker/Dockerfile .
+
+.PHONY: generate.docs
+generate.docs:
+	swag init -g ./pkg/route/config.go

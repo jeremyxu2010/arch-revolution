@@ -1,9 +1,9 @@
 package main
 
 import (
-	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/config"
-	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/log"
-	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/server"
+	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/pkg/config"
+	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/pkg/log"
+	"git.code.oa.com/tcnp/arch-revolution/demo6/user-service/pkg/server"
 	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
 	jaegerconfig "github.com/uber/jaeger-client-go/config"
