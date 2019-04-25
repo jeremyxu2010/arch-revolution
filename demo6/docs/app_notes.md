@@ -26,26 +26,52 @@ demo6是一个简单的示例微服务应用，其由spring boot及Go语言编�
 | redis-service | tcp/6379 | 有状态 | 0.5 | 1024 | 2 |
 | rabbitmq-service | tcp/5672 | 有状态 | 0.5 | 1024 | 2 |
 
-## 3. 应用各微服务调用关系
+## 3. 各微服务模块日志
+
+| 应用微服务模块名称 |     日志说明（如日志输出到容器某路径下，须详细说明）     |
+| ------------------ | ---- |
+| user-service | 直接输出到标准输出 |
+| blog-service | 直接输出到标准输出 |
+| aggregation-service | 直接输出到标准输出 |
+| apigateway-service | 直接输出到标准输出 |
+| frontend-service | 直接输出到标准输出 |
+| mysql-service | 直接输出到标准输出 |
+| redis-service | 直接输出到标准输出 |
+| rabbitmq-service | 直接输出到标准输出 |
+
+## 4. 各微服务模块应用监控指标
+
+| 应用微服务模块名称 |     应用监控指标说明（如以prometheus等方式暴露应用监控指标，须详细说明）     |
+| ------------------ | ---- |
+| user-service | 示例应用，未暴露应用监控指标 |
+| blog-service | 示例应用，未暴露应用监控指标 |
+| aggregation-service | 示例应用，未暴露应用监控指标 |
+| apigateway-service | 示例应用，未暴露应用监控指标 |
+| frontend-service | 示例应用，未暴露应用监控指标 |
+| mysql-service | 示例应用，未暴露应用监控指标 |
+| redis-service | 示例应用，未暴露应用监控指标 |
+| rabbitmq-service | 示例应用，未暴露应用监控指标 |
+
+## 5. 各微服务模块调用关系
 
 ![1556078438434](../images/1556078438434.png)
 
 
 
-## 4. 应用依赖的镜像
+## 6. 应用依赖的镜像
 
 | 应用微服务模块名称 |   docker镜像名称  |   docker镜像tag   | 相关dockerfile |
 | ------------------ | ---- | ---- | ---- |
-| user-service | demo6/user-service | 0.0.1-SNAPSHOT | [user-service的Dockerfile](user-service/docker/Dockerfile) |
-| blog-service | demo6/blog-service | 0.0.1-SNAPSHOT | [blog-service的pom.xml](blog-service/pom.xml)(直接由mvn命令生成docker镜像) |
-| aggregation-service | demo6/aggregation-service | 0.0.1-SNAPSHOT | [aggregation-service的pom.xml](aggregation-service/pom.xml)(直接由mvn命令生成docker镜像) |
-| apigateway-service | demo6/apigateway-service | 0.0.1-SNAPSHOT | [apigateway-service的pom.xml](apigateway-service/pom.xml)(直接由mvn命令生成docker镜像) |
-| frontend-service | demo6/frontend-service | 0.0.1-SNAPSHOT | [frontend-service的pom.xml](frontend-service/pom.xml)(直接由mvn命令生成docker镜像) |
+| user-service | demo6/user-service | 0.0.1-SNAPSHOT | [user-service的Dockerfile](../user-service/docker/Dockerfile) |
+| blog-service | demo6/blog-service | 0.0.1-SNAPSHOT | [blog-service的pom.xml](../blog-service/pom.xml)(直接由mvn命令生成docker镜像) |
+| aggregation-service | demo6/aggregation-service | 0.0.1-SNAPSHOT | [aggregation-service的pom.xml](../aggregation-service/pom.xml)(直接由mvn命令生成docker镜像) |
+| apigateway-service | demo6/apigateway-service | 0.0.1-SNAPSHOT | [apigateway-service的pom.xml](../apigateway-service/pom.xml)(直接由mvn命令生成docker镜像) |
+| frontend-service | demo6/frontend-service | 0.0.1-SNAPSHOT | [frontend-service的pom.xml](../frontend-service/pom.xml)(直接由mvn命令生成docker镜像) |
 | mysql-service | mysql<br>busybox<br> | 5.7.14<br>1.29.3 | 官方镜像 |
 | redis-service | bitnami/redis | 4.0.14 | 官方镜像 |
 | rabbitmq-service | bitnami/rabbitmq | 3.7.14 | 官方镜像 |
 
-## 5. 应用部署的chart包
+## 7. 应用部署的chart包
 
 应用部署到kubernetes里所使用的[chart包](../chart/demo6)
 
