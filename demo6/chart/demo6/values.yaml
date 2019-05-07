@@ -7,6 +7,7 @@ mysql:
   fullnameOverride: mysql-service
   initializationFiles:
     demo6_user_db.sql: |-
+      SET NAMES UTF8;
       create database demo6_user_db default character set utf8;
       use demo6_user_db;
       DROP TABLE IF EXISTS `user`;
@@ -22,6 +23,7 @@ mysql:
       INSERT INTO `user` VALUES (1,'Steve','gaussic2','Steve','NoJob'),(2,'Bill','111111','Bill','Gates'),(3,'Mark','22222','Mark','Zuckerberg'),(4,'gauss','11111111','Gaussic','D');
       UNLOCK TABLES;
     demo6_blog_db.sql: |-
+      SET NAMES UTF8;
       create database demo6_blog_db default character set utf8;
       use demo6_blog_db;
       DROP TABLE IF EXISTS `blog`;
