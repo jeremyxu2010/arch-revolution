@@ -23,7 +23,7 @@ public class FrontendController {
         List<ServiceInstance> instances = discoveryClient.getInstances("apigateway-service");
         if (instances.size() > 0){
             ServiceInstance instance = instances.get(0);
-            String apiGatewayURL = String.format("http://%s:%d", instance.getHost(), instance.getPort());
+            String apiGatewayURL = instance.getUri().toString();
             return String.format("window.API_GATEWAY_URL='%s';", apiGatewayURL);
         }
         return "if(window.console){window.console.log('not discovery api gateway address, use default.');}";
