@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"github.com/zsais/go-gin-prometheus"
 )
 
 // @title Swagger user-service
@@ -15,6 +16,9 @@ import (
 // @description This is a user-service api server.
 // @BasePath /api/v1
 func ConfigureRoutes(r *gin.Engine){
+	p := ginprometheus.NewPrometheus("gin")
+	p.Use(r)
+
 	r.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "OK")
 	})

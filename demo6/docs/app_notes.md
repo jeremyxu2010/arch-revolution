@@ -43,7 +43,7 @@ demo6是一个简单的示例微服务应用，其由spring boot及Go语言编�
 
 | 应用微服务模块名称 |     应用监控指标说明（如以prometheus等方式暴露应用监控指标，须详细说明）     |
 | ------------------ | ---- |
-| user-service | 示例应用，未暴露应用监控指标 |
+| user-service | 以 http://${user_service_ip}:8081/metrics 暴露prometheus格式的应用监控指标 |
 | blog-service | 示例应用，未暴露应用监控指标 |
 | aggregation-service | 示例应用，未暴露应用监控指标 |
 | apigateway-service | 示例应用，未暴露应用监控指标 |
