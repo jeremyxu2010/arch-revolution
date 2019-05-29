@@ -3,7 +3,8 @@ SERVER_VERSION = 0.0.1-SNAPSHOT
 BUILD_FOLDER = ./build
 TARGET_BIN_DIR = pkg/cmd/user-service
 TARGET_BIN_FILE = user-service
-DOCKER_IMAGE_NAME = demo6/user-service
+DOCKER_IMAGE_NAME = tcnp/demo6/user-service/user-service
+DOCKER_REGISTRY = registry.tcnp-dev.oa.com
 ## command
 GO           = go
 GO_VENDOR    = go mod
@@ -26,6 +27,11 @@ src.build:
 .PHONY: docker.build
 docker.build:
 	docker build --rm --tag $(DOCKER_IMAGE_NAME):$(SERVER_VERSION) -f ./docker/Dockerfile .
+
+.PHONY: docker.push
+docker.push: docker.build
+	docker tag $(DOCKER_IMAGE_NAME):$(SERVER_VERSION) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(SERVER_VERSION)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(SERVER_VERSION)
 
 .PHONY: generate.docs
 generate.docs:

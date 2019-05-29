@@ -68,7 +68,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageName>${docker.image.prefix}/${project.artifactId}/${project.artifactId}</imageName>
                     <baseImage>${docker.base.image}</baseImage>
                     <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar", "--spring.config.location=file:/etc/${project.artifactId}/application.properties"]</entryPoint>
                     <resources>
@@ -108,8 +108,8 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
-                            <newName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}:${project.version}</newName>
+                            <image>${docker.image.prefix}/${project.artifactId}/${project.artifactId}:${project.version}</image>
+                            <newName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}/${project.artifactId}:${project.version}</newName>
                         </configuration>
                     </execution>
                     <execution>
@@ -119,7 +119,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                            <imageName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}/${project.artifactId}:${project.version}</imageName>
                         </configuration>
                     </execution>
                 </executions>

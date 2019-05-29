@@ -343,7 +343,8 @@ frontend-service:
     spring.cloud.consul.discovery.prefer-ip-address=true
     #如果自动注册的ip地址有误，可配置下面的参数
     #spring.cloud.inetutils.preferred-networks=^192.168
-    #在具体的部署场景，应用的API网关地址是确定的
-    #app.apiGatewayUrl=http://192.168.2.200:8084
+    #非istio场景时API网关地址
     app.apiGatewayUrl=http://demo5.api.arch-revolution.tcnp-dev.oa.com
-    #app.apiGatewayUrl=http://127.0.0.1:8084
+    #istio场景时API网关地址
+    #app.apiGatewayUrl=http://demo5-istio.arch-revolution.tcnp-dev.oa.com
+

@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: demo6/aggregation-service
+  repository: tcnp/demo6/aggregation-service/aggregation-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 
