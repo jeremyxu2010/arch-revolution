@@ -37,7 +37,7 @@ demo4已经是一个经过架构优化的微服务架构应用，但因为始终
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <configuration>
-                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <imageName>${docker.image.prefix}/${project.artifactId}/${project.artifactId}</imageName>
                         <baseImage>${docker.base.image}</baseImage>
                         <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar", "--spring.config.location=file:/etc/${project.artifactId}/application.properties"]</entryPoint>
                         <resources>
@@ -77,8 +77,8 @@ demo4已经是一个经过架构优化的微服务架构应用，但因为始终
                                 <goal>tag</goal>
                             </goals>
                             <configuration>
-                                <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
-                                <newName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}:${project.version}</newName>
+                                <image>${docker.image.prefix}/${project.artifactId}/${project.artifactId}:${project.version}</image>
+                                <newName>${docker.registry.server}/${project.artifactId}/${docker.image.prefix}/${project.artifactId}:${project.version}</newName>
                             </configuration>
                         </execution>
                         <execution>
@@ -88,7 +88,7 @@ demo4已经是一个经过架构优化的微服务架构应用，但因为始终
                                 <goal>push</goal>
                             </goals>
                             <configuration>
-                                <imageName>${docker.registry.server}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
+                                <imageName>${docker.registry.server}/${project.artifactId}/${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
                             </configuration>
                         </execution>
                     </executions>
@@ -116,7 +116,7 @@ demo4已经是一个经过架构优化的微服务架构应用，但因为始终
       ...
       <properties>
               ...
-              <docker.registry.server>harbor.tcnp-dev.oa.com</docker.registry.server>
+              <docker.registry.server>registry.tcnp-dev.oa.com</docker.registry.server>
               ...
       </properties>
       ...

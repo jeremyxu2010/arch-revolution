@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: demo5/blog-service
+  repository: tcnp/demo5/blog-service/blog-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 
@@ -89,3 +89,7 @@ configmap: |+
   spring.redis.jedis.pool.min-idle=0
   # 连接超时时间（毫秒）
   spring.redis.timeout=0
+  spring.rabbitmq.host=rabbitmq-service
+  spring.rabbitmq.port=5672
+  spring.rabbitmq.username=guest
+  spring.rabbitmq.password=guest

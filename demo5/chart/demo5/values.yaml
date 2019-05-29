@@ -3,6 +3,14 @@
 # Declare variables to be passed into your templates.
 
 mysql:
+  image: "official/mysql/library/mysql"
+  imageTag: "5.7.14"
+  busybox:
+    image: "official/mysql/library/busybox"
+    tag: "1.29.3"
+  metrics:
+    image: official/mysql/prom/mysqld-exporter
+    imageTag: v0.10.0
   mysqlRootPassword: "123456"
   fullnameOverride: mysql-service
   initializationFiles:
@@ -40,24 +48,40 @@ mysql:
       UNLOCK TABLES;
 
 redis:
-  fullnameOverride: redis-service
   image:
+    registry: registry.tcnp-dev.oa.com
+    repository: official/redis/bitnami/redis
+    tag: 4.0.11
     pullPolicy: IfNotPresent
+  metrics:
+    image:
+      registry: registry.tcnp-dev.oa.com
+      repository: official/redis/oliver006/redis_exporter
+      tag: v0.28.0
+  volumePermissions:
+    image:
+      registry: registry.tcnp-dev.oa.com
+      repository: official/redis/bitnami/minideb
+      tag: latest
+  fullnameOverride: redis-service
   usePassword: false
   cluster:
     enabled: false
 
 rabbitmq:
+  image:
+    registry: registry.tcnp-dev.oa.com
+    repository: common/library/rabbitmq
   fullnameOverride: rabbitmq-service
   rabbitmq:
-    username: user
+    username: guest
     password: guest
 
 user-service:
   fullnameOverride: "user-service"
   replicaCount: 1
   image:
-    repository: demo5/user-service
+    repository: tcnp/demo5/user-service/user-service
     tag: 0.0.1-SNAPSHOT
   service:
     type: ClusterIP
@@ -113,7 +137,7 @@ blog-service:
   fullnameOverride: "blog-service"
   replicaCount: 1
   image:
-    repository: demo5/blog-service
+    repository: tcnp/demo5/blog-service/blog-service
     tag: 0.0.1-SNAPSHOT
   service:
     type: ClusterIP
@@ -160,12 +184,16 @@ blog-service:
     spring.redis.jedis.pool.min-idle=0
     # 连接超时时间（毫秒）
     spring.redis.timeout=0
+    spring.rabbitmq.host=rabbitmq-service
+    spring.rabbitmq.port=5672
+    spring.rabbitmq.username=guest
+    spring.rabbitmq.password=guest
 
 aggregation-service:
   fullnameOverride: "aggregation-service"
   replicaCount: 1
   image:
-    repository: demo5/aggregation-service
+    repository: tcnp/demo5/aggregation-service/aggregation-service
     tag: 0.0.1-SNAPSHOT
   service:
     type: ClusterIP
@@ -225,7 +253,7 @@ apigateway-service:
   fullnameOverride: "apigateway-service"
   replicaCount: 1
   image:
-    repository: demo5/apigateway-service
+    repository: tcnp/demo5/apigateway-service/apigateway-service
     tag: 0.0.1-SNAPSHOT
   service:
     type: ClusterIP
@@ -290,7 +318,7 @@ frontend-service:
   fullnameOverride: "frontend-service"
   replicaCount: 1
   image:
-    repository: demo5/frontend-service
+    repository: tcnp/demo5/frontend-service/frontend-service
     tag: 0.0.1-SNAPSHOT
   service:
     type: ClusterIP

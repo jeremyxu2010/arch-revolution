@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: demo5/user-service
+  repository: tcnp/demo5/user-service/user-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 

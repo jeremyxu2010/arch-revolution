@@ -182,7 +182,7 @@ spec:
                 key: rabbitmq-password
 {{- if .Values.metrics.enabled }}
       - name: metrics
-        image: {{ template "rabbitmq.metrics.image" . }}
+  {{ template "rabbitmq.metrics.image" . }}
         imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
         env:
         - name: RABBIT_PASSWORD

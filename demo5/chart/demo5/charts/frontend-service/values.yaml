@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: demo5/frontend-service
+  repository: tcnp/demo5/frontend-service/frontend-service
   tag: 0.0.1-SNAPSHOT
   pullPolicy: IfNotPresent
 
