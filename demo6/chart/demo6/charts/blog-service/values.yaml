@@ -12,6 +12,8 @@ image:
 nameOverride: ""
 fullnameOverride: "blog-service"
 
+registry: registry.tcnp-dev.oa.com
+
 service:
   type: ClusterIP
   port: 8082

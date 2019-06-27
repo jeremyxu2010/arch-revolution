@@ -88,6 +88,7 @@ user-service:
     port: 8081
   ingress:
     enabled: false
+  registry: registry.tcnp-dev.oa.com
   registryAuth:
     enabled: true
     userName: admin
@@ -144,6 +145,7 @@ blog-service:
     port: 8082
   ingress:
     enabled: false
+  registry: registry.tcnp-dev.oa.com
   registryAuth:
     enabled: true
     userName: admin
@@ -200,6 +202,7 @@ aggregation-service:
     port: 8083
   ingress:
     enabled: false
+  registry: registry.tcnp-dev.oa.com
   registryAuth:
     enabled: true
     userName: admin
@@ -263,6 +266,7 @@ apigateway-service:
     path: /
     hosts:
       - demo5.api.arch-revolution.tcnp-dev.oa.com
+  registry: registry.tcnp-dev.oa.com
   registryAuth:
     enabled: true
     userName: admin
@@ -328,6 +332,7 @@ frontend-service:
     path: /
     hosts:
       - demo5.arch-revolution.tcnp-dev.oa.com
+  registry: registry.tcnp-dev.oa.com
   registryAuth:
     enabled: true
     userName: admin
