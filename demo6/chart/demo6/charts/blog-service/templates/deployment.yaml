@@ -23,10 +23,6 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.registryAuth.enabled }}
-          imagePullSecrets:
-            - name: {{ .Values.registryAuth.secretName }}
-          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -48,7 +44,11 @@ spec:
               mountPath: /etc/localtime
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
+{{- if .Values.registryAuth.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.registryAuth.secretName }}
+{{- end }}
+{{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
